@@ -1,6 +1,7 @@
 import { useState } from 'preact/hooks'
 import './app.css'
 import Square from './components/Square'
+import ResetGame from './components/ResetButton';
 
 
 export function App() {
@@ -23,9 +24,14 @@ export function App() {
   const winner = computeWinner(value)
   let status;
   if(winner){
-    status = `Winner ${winner}`;
+    status = `Winner: ${winner}`;
   } else {
-    status = `Next Player ${nextMove ? 'X' : 'O'}`
+    status = `Next Player: ${nextMove ? 'X' : 'O'}`
+  }
+
+  const resetGame = () => {
+    setValue(Array(9).fill(null));
+    setNextMove(true)
   }
 
   return (
@@ -44,7 +50,9 @@ export function App() {
         <Square value={value[6]} onClickHandle={() => clickHandle(6)}/>
         <Square value={value[7]} onClickHandle={() => clickHandle(7)}/>
         <Square value={value[8]} onClickHandle={() => clickHandle(8)}/>
-      </div>      
+      </div>
+      <h1>{status}</h1>
+      <ResetGame  onReset={resetGame}/>
     </>
   )
 }
